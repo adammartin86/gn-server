@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Recipe = require("../db").import("../models/recipe");
+const User = require("../db").import("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let validateSession = require("../middleware/validate-session");
