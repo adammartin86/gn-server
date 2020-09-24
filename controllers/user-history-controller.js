@@ -1,9 +1,11 @@
 
 const router = require("express").Router();
+const User = require("../db").import("../models/user");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+let validateSession = require("../middleware/validate-session");
 const UserHistory = require("../db").import("../models/user-history");
 let sequelize = require("../db");
-
-// let validateSession = require("../middleware/validate-session");
 
 //FUNCTIONING
 router.post("/post", (req, res) => {
