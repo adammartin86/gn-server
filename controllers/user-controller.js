@@ -6,10 +6,10 @@ let validateSession = require("../middleware/validate-session");
 let sequelize = require("../db");
 
 
-//SIGN-UP - functioning? --
-router.post('/signin', (req, res) => {
+//SIGN-UP - functioning? YES 
+router.post('/signup', (req, res) => {
     let userModel = {
-        username: req.body.user.username,
+        userName: req.body.user.userName,
         password: bcrypt.hashSync(req.body.user.password, 14),
     };
     
@@ -17,7 +17,7 @@ router.post('/signin', (req, res) => {
         let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
 
         res.status(200).json({
-            user: user.username,
+            user: req.body.user.userName,
             message: 'USER SUCCESSFULLY INITIALIZED',
             sessionToken: token
         });
@@ -27,11 +27,11 @@ router.post('/signin', (req, res) => {
     });
 });
 
-//LOG-IN - functioning? --
+//LOG-IN - functioning? YES
 router.post('/login', (req, res) => {
-    let username = req.body.user.username
+    let userName = req.body.user.userName
     User.findOne({
-        where: {username: username}
+        where: {userName: userName}
     })
     .then(function logIn(user) {
         if(user) {
@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
 
                     res.status(200).json({
                         message: "COMMENCE TRIVIA!",
-                        username: username,
+                        userName: userName,
                         sessionToken: token
                     })
                 } else {
@@ -69,7 +69,7 @@ router.get('/seeall', (req, res) => {
 //EDIT OR UPDATE USER - functioning? --
 router.put('/edit', validateSession, (req, res) => {
     let userModel = {
-        user: req.body.user.username,
+        user: req.body.user.userName,
         password: bcrypt.hashSync(req.body.user.password, 14)
     };
 

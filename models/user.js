@@ -13,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       password: {
           type: DataTypes.STRING,
           allowNull: false,
-          validate: {
-            min: 8,
-            isAlphanumeric: true,
-          }         
+          // validate: {
+          //   min: 8,
+          //   isAlphanumeric: true,
+          // }         
       },
       
     });
     return User;
   };
+
