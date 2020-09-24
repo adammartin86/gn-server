@@ -2,10 +2,10 @@ module.exports = (sequelize, DataTypes) => {
     const UserHistory = sequelize.define("userHistory", {
       owner: {
         type: DataTypes.INTEGER,
-        
+        allowNull: true,
       },
       datePlayed: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         
       },
       triviaTopic: {
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       gameId: {
           type: DataTypes.INTEGER,
+          allowNull: true,
       },
     });
     return UserHistory;
