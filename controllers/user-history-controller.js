@@ -1,7 +1,9 @@
 
 const router = require("express").Router();
-// let validateSession = require("../middleware/validate-session");
 const UserHistory = require("../db").import("../models/user-history");
+let sequelize = require("../db");
+
+// let validateSession = require("../middleware/validate-session");
 
 //FUNCTIONING
 router.post("/post", (req, res) => {
@@ -53,6 +55,7 @@ router.put("/updatenotes/:id", function (req, res) {
     .then((history) => res.status(200).json(history))
     .catch((err) => res.status(500).json({ error: err }));
 });
+
 
 router.delete("/delete/:id", function (req, res) {
   const query = { where: { id: req.params.id, 
