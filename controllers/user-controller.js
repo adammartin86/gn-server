@@ -57,6 +57,7 @@ router.post('/login', (req, res) => {
     })
 })
 
+<<<<<<< HEAD
 //__________ADMIN______________
 
 //SEE ALL USERS - functioning? YES
@@ -94,3 +95,6 @@ router.delete('/delete/:id', (req, res) => {
 
 
 module.exports = router;
+=======
+  module.exports = router;
+>>>>>>> c6f9669772db51088636a9b9abca63cab8fdfb73
