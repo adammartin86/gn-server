@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
-        isEmail: true,        
+        isEmail: true,   
+        isUnique: true,     
       },
       
       admin: {
@@ -13,10 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       password: {
           type: DataTypes.STRING,
           allowNull: false,
-          // validate: {
-          //   min: 8,
-          //   isAlphanumeric: true,
-          // }         
+          validate: {
+            min: 8,
+          }         
       },
       
     });
