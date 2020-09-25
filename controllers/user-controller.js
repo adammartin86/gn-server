@@ -57,44 +57,4 @@ router.post('/login', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
-//__________ADMIN______________
-
-//SEE ALL USERS - functioning? YES
-router.get('/seeall', (req, res) => {
-    User.findAll()
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(500).json({error: err, message: "NOT HAPPENIN'!"}))
-});
-
-//EDIT OR UPDATE USER - functioning? YES
-router.put('/edit/:id', (req, res) => {
-    let userModel = {
-        userName: req.body.user.userName,
-        password: bcrypt.hashSync(req.body.user.password, 14)
-    };
-
-    let query = {where: {id: req.params.id}};
-
-    User.update(userModel, query)
-    .then((users) => res.status(200).json(users))
-    .catch((err) => res.status(500).json({error: err, message: "OOPSIE POOPSIE"}))
-});
-
-//DELETE USER- functioning? YES
-router.delete('/delete/:id', (req, res) => {
-    let query = {where: {id: req.params.id}};
-
-    User.destroy(query)
-    .then((deleteStatus) => {
-        let message = deleteStatus != [0] ? "USER DELETED" : "DELETE DENIED"
-        res.status(200).json({message: message})})
-    .catch((err) => res.status(500).json({error: err, message: "DELETE DENIED"}))
-})
-
-
-
-module.exports = router;
-=======
   module.exports = router;
->>>>>>> c6f9669772db51088636a9b9abca63cab8fdfb73
