@@ -8,9 +8,9 @@ const UserHistory = require("../db").import("../models/user-history");
 let sequelize = require("../db");
 
 //FUNCTIONING
-router.post("/post", (req, res) => {
+router.post("/post", validateSession, (req, res) => {
   const userHistory = {
-    // owner: req.user.id,
+    owner: req.user.id,
     datePlayed: req.body.userHistory.datePlayed,
     triviaTopic: req.body.userHistory.triviaTopic,
     difficulty: req.body.userHistory.difficulty,
@@ -23,7 +23,7 @@ router.post("/post", (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/get/:id", (req, res) => {
+router.get("/get/:id", validateSession, (req, res) => {
   let userid = req.user.id.toString();
   UserHistory.findAll({
     where: { owner: userid },
@@ -33,16 +33,16 @@ router.get("/get/:id", (req, res) => {
 });
 
 //FUNCTIONING
-router.get("/getall", (req, res) => {
+router.get("/getall", validateSession, (req, res) => {
   UserHistory.findAll()
     .then((history) => res.status(200).json(history))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 //FUNCTIONING
-router.put("/updatenotes/:id", function (req, res) {
+router.put("/updatenotes/:id", validateSession, function (req, res) {
   const updateNote = {
-      // owner: req.user.id,
+      owner: req.user.id,
       datePlayed: req.body.userHistory.datePlayed,
       triviaTopic: req.body.userHistory.triviaTopic,
       difficulty: req.body.userHistory.difficulty,
@@ -59,9 +59,9 @@ router.put("/updatenotes/:id", function (req, res) {
 });
 
 
-router.delete("/delete/:id", function (req, res) {
+router.delete("/delete/:id", validateSession, function (req, res) {
   const query = { where: { id: req.params.id, 
-    // owner: req.user.id.toString() 
+    owner: req.user.id.toString() 
   } };
 
   UserHistory.destroy(query)
