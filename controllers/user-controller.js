@@ -62,10 +62,10 @@ router.post('/login', (req, res) => {
 //__________ADMIN______________
 
 //SEE ALL USERS - functioning? YES
-router.get('/seeall', validateSession, (req, res) => {
-    if(req.body.user.permission !== "admin") {
-        res.status(401).send("ADMINS ONLY")
-    }
+router.get('/seeall', validateSession, adminUser(), (req, res) => {
+    //     if(req.user.permission !== "admin") {
+    //     res.status(401).send("ADMINS ONLY")
+    // }
     User.findAll()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(500).json({error: err, message: "NOT HAPPENIN'!"}))
@@ -85,7 +85,7 @@ router.put('/edit/:id', validateSession, adminUser(), (req, res) => {
     .catch((err) => res.status(500).json({error: err, message: "OOPSIE POOPSIE"}))
 });
 
-//DELETE USER- functioning? YES; delete denied for admin and basic null, works for basic
+//DELETE USER- functioning? YES
 router.delete('/delete/:id', validateSession, adminUser(), (req, res) => {
     let query = {where: {id: req.params.id}};
 

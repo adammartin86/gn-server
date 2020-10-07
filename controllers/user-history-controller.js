@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 let validateSession = require("../middleware/validate-session");
 const UserHistory = require("../db").import("../models/user-history");
 let sequelize = require("../db");
+const adminUser = require("../middleware/admin");
 
 //FUNCTIONING
 router.post("/post", validateSession, (req, res) => {
@@ -33,7 +34,7 @@ router.get("/get/:id", validateSession, (req, res) => {
 });
 
 //FUNCTIONING
-router.get("/getall", validateSession, (req, res) => {
+router.get("/getall", validateSession, adminUser(), (req, res) => {
   UserHistory.findAll()
     .then((history) => res.status(200).json(history))
     .catch((err) => res.status(500).json({ error: err }));
@@ -59,7 +60,7 @@ router.put("/updatenotes/:id", validateSession, function (req, res) {
 });
 
 
-router.delete("/delete/:id", validateSession, function (req, res) {
+router.delete("/delete/:id", validateSession, adminUser(), function (req, res) {
   const query = { where: { id: req.params.id, 
     owner: req.user.id.toString() 
   } };
