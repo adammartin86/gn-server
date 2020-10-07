@@ -34,6 +34,7 @@ router.get("/get/:id", validateSession, (req, res) => {
 });
 
 //FUNCTIONING
+//Admin functioning
 router.get("/getall", validateSession, adminUser(), (req, res) => {
   UserHistory.findAll()
     .then((history) => res.status(200).json(history))
@@ -41,6 +42,7 @@ router.get("/getall", validateSession, adminUser(), (req, res) => {
 });
 
 //FUNCTIONING
+//Wouldn't we only want to include gameNotes, and not the rest of it since the rest isn't supposed to be able to be edited?
 router.put("/updatenotes/:id", validateSession, function (req, res) {
   const updateNote = {
       owner: req.user.id,
@@ -59,7 +61,7 @@ router.put("/updatenotes/:id", validateSession, function (req, res) {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-
+//Admin functioning
 router.delete("/delete/:id", validateSession, adminUser(), function (req, res) {
   const query = { where: { id: req.params.id, 
     owner: req.user.id.toString() 
