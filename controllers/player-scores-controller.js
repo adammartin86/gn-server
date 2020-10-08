@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let validateSession = require("../middleware/validate-session");
 let sequelize = require("../db");
+let adminUser = require("../middleware/admin")
 
 //POST players names at beginning of game; WORKING
 //  http://localhost:3000/player-scores/startgame
@@ -36,6 +37,7 @@ router.post("/startgame", validateSession, (req, res) => {
 
 //PUT to insert the final scores of the players at the end of the game; WORKING
 // http://localhost:3000/player-scores/update/:id
+//Would we exclude playernames here since they don't get changed?
 router.put("/update/:id", validateSession, function (req, res) {
   const playerScores = {
     player1: req.body.playerScores.player1,
@@ -66,10 +68,11 @@ router.put("/update/:id", validateSession, function (req, res) {
 
 //GET - see player scores for a specific game; WORKING
 // http://localhost:3000/player-scores/seegame/:id
+//Allowed me to see any user's game by id
 router.get("/seegame/:id", validateSession, (req, res) => {
   let gameId = req.params.id;
   PlayerScores.findAll({
-    where: { id: gameId}
+    where: {id: gameId}
   })
   .then((playerScores) => res.status(200).json(playerScores))
   .catch((err) => res.status(500).json({error: err}));
@@ -77,15 +80,17 @@ router.get("/seegame/:id", validateSession, (req, res) => {
 
 //GET - ADMIN - see ALL games
 // http://localhost:3000/player-scores/seeallgames
-router.get("/seeallgames", validateSession, (req, res) => {
+//Admin working
+router.get("/seeallgames", validateSession, adminUser(), (req, res) => {
   PlayerScores.findAll()
   .then((playerScores) => res.status(200).json(playerScores))
   .catch((err) => res.status(500).json({error: err}));
 });
 
-//DELETE - delete a whole game
+//DELETE - ADMIN - delete a whole game 
 // http://localhost:3000/player-scores/delete/:id
-router.delete('/delete/:id', validateSession, function (req, res) {
+//Admin working
+router.delete('/delete/:id', validateSession, adminUser(), function (req, res) {
   const query = {where: { id: req.params.id}};
   PlayerScores.destroy(query)
   .then(() => res.status(200).json({ message: "Player Scores removed."}))
