@@ -8,10 +8,9 @@ const UserHistory = require("../db").import("../models/user-history");
 let sequelize = require("../db");
 
 //FUNCTIONING
-router.post("/post", (req, res) => {
+router.post("/post", validateSession, (req, res) => {
   const userHistory = {
-    // owner: req.user.id,
-    datePlayed: req.body.userHistory.datePlayed,
+    owner: req.user.id,
     triviaTopic: req.body.userHistory.triviaTopic,
     difficulty: req.body.userHistory.difficulty,
     winner: req.body.userHistory.winner,
@@ -23,8 +22,8 @@ router.post("/post", (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/get/:id", (req, res) => {
-  let userid = req.user.id.toString();
+router.get("/get/mygames", validateSession, (req, res) => {
+  let userid = req.user.id;
   UserHistory.findAll({
     where: { owner: userid },
   })

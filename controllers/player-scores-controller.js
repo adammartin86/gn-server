@@ -7,8 +7,9 @@ let sequelize = require("../db");
 
 //POST players names at beginning of game; WORKING
 //  http://localhost:3000/player-scores/startgame
-router.post("/startgame", (req, res) => {
+router.post("/startgame", validateSession, (req, res) => {
   const playerScores = {
+    owner: req.user.id,
     player1: req.body.playerScores.player1,
     player2: req.body.playerScores.player2,
     player3: req.body.playerScores.player3,
@@ -35,7 +36,7 @@ router.post("/startgame", (req, res) => {
 
 //PUT to insert the final scores of the players at the end of the game; WORKING
 // http://localhost:3000/player-scores/update/:id
-router.put("/update/:id", function (req, res) {
+router.put("/update/:id", validateSession, function (req, res) {
   const playerScores = {
     player1: req.body.playerScores.player1,
     player2: req.body.playerScores.player2,
@@ -65,7 +66,7 @@ router.put("/update/:id", function (req, res) {
 
 //GET - see player scores for a specific game; WORKING
 // http://localhost:3000/player-scores/seegame/:id
-router.get("/seegame/:id", (req, res) => {
+router.get("/seegame/:id", validateSession, (req, res) => {
   let gameId = req.params.id;
   PlayerScores.findAll({
     where: { id: gameId}
@@ -76,7 +77,7 @@ router.get("/seegame/:id", (req, res) => {
 
 //GET - ADMIN - see ALL games
 // http://localhost:3000/player-scores/seeallgames
-router.get("/seeallgames", (req, res) => {
+router.get("/seeallgames", validateSession, (req, res) => {
   PlayerScores.findAll()
   .then((playerScores) => res.status(200).json(playerScores))
   .catch((err) => res.status(500).json({error: err}));
@@ -84,7 +85,7 @@ router.get("/seeallgames", (req, res) => {
 
 //DELETE - delete a whole game
 // http://localhost:3000/player-scores/delete/:id
-router.delete('/delete/:id', function (req, res) {
+router.delete('/delete/:id', validateSession, function (req, res) {
   const query = {where: { id: req.params.id}};
   PlayerScores.destroy(query)
   .then(() => res.status(200).json({ message: "Player Scores removed."}))
