@@ -3,12 +3,15 @@ module.exports = (sequelize, DataTypes) => {
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
-        isEmail: true,   
-        isUnique: true,     
+        validate: {
+          isEmail: true, 
+        },
+        unique: true,
       },
       
-      admin: {
-        type: DataTypes.BOOLEAN,        
+      permission: {
+        type: DataTypes.STRING,
+        allowNull: false,        
       },
 
       password: {

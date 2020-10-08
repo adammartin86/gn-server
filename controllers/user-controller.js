@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../db").import("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const adminUser = require("../middleware/admin")
 let validateSession = require("../middleware/validate-session");
 let sequelize = require("../db");
 
@@ -10,6 +11,7 @@ let sequelize = require("../db");
 router.post('/signup', (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
+        permission: req.body.user.permission,
         password: bcrypt.hashSync(req.body.user.password, 14),
     };
     
@@ -60,14 +62,17 @@ router.post('/login', (req, res) => {
 //__________ADMIN______________
 
 //SEE ALL USERS - functioning? YES
-router.get('/seeall', (req, res) => {
+router.get('/seeall', validateSession, adminUser(), (req, res) => {
+    //     if(req.user.permission !== "admin") {
+    //     res.status(401).send("ADMINS ONLY")
+    // }
     User.findAll()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(500).json({error: err, message: "NOT HAPPENIN'!"}))
 });
 
 //EDIT OR UPDATE USER - functioning? YES
-router.put('/edit/:id', (req, res) => {
+router.put('/edit/:id', validateSession, adminUser(), (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
         password: bcrypt.hashSync(req.body.user.password, 14)
@@ -81,7 +86,7 @@ router.put('/edit/:id', (req, res) => {
 });
 
 //DELETE USER- functioning? YES
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', validateSession, adminUser(), (req, res) => {
     let query = {where: {id: req.params.id}};
 
     User.destroy(query)
