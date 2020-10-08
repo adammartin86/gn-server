@@ -42,16 +42,9 @@ router.get("/getall", validateSession, adminUser(), (req, res) => {
 });
 
 //FUNCTIONING
-//Wouldn't we only want to include gameNotes, and not the rest of it since the rest isn't supposed to be able to be edited?
 router.put("/updatenotes/:id", validateSession, function (req, res) {
   const updateNote = {
-      owner: req.user.id,
-      datePlayed: req.body.userHistory.datePlayed,
-      triviaTopic: req.body.userHistory.triviaTopic,
-      difficulty: req.body.userHistory.difficulty,
-      winner: req.body.userHistory.winner,
       gameNotes: req.body.userHistory.gameNotes,
-      gameId: req.body.userHistory.gameId,
   };
 
   const query = { where: { id: req.params.id} };

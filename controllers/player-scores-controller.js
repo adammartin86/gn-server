@@ -8,7 +8,6 @@ let adminUser = require("../middleware/admin")
 
 //POST players names at beginning of game; WORKING
 //  http://localhost:3000/player-scores/startgame
-//Would we exclude player scores from this since they're not being updated at this point?
 router.post("/startgame", validateSession, (req, res) => {
   const playerScores = {
     player1: req.body.playerScores.player1,
