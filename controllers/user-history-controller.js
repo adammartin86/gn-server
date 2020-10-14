@@ -6,16 +6,12 @@ const bcrypt = require("bcryptjs");
 let validateSession = require("../middleware/validate-session");
 const UserHistory = require("../db").import("../models/user-history");
 let sequelize = require("../db");
-const adminUser = require("../middleware/admin");
+const adminUser = require("../middleware/admin")
 
 //FUNCTIONING
 router.post("/post", validateSession, (req, res) => {
   const userHistory = {
     owner: req.user.id,
-<<<<<<< HEAD
-    datePlayed: req.body.userHistory.datePlayed,
-=======
->>>>>>> 740277f6ebfb16554b4918bca9b401428075c6a5
     triviaTopic: req.body.userHistory.triviaTopic,
     difficulty: req.body.userHistory.difficulty,
     winner: req.body.userHistory.winner,
@@ -27,14 +23,10 @@ router.post("/post", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-<<<<<<< HEAD
-router.get("/get/:id", validateSession, (req, res) => {
-  let userid = req.user.id.toString();
-=======
+
 
 router.get("/get/mygames", validateSession, (req, res) => {
   let userid = req.user.id;
->>>>>>> 740277f6ebfb16554b4918bca9b401428075c6a5
   UserHistory.findAll({
     where: { owner: userid },
   })
@@ -43,7 +35,6 @@ router.get("/get/mygames", validateSession, (req, res) => {
 });
 
 //FUNCTIONING
-//Admin functioning
 router.get("/getall", validateSession, adminUser(), (req, res) => {
   UserHistory.findAll()
     .then((history) => res.status(200).json(history))
@@ -53,7 +44,7 @@ router.get("/getall", validateSession, adminUser(), (req, res) => {
 //FUNCTIONING
 router.put("/updatenotes/:id", validateSession, function (req, res) {
   const updateNote = {
-      gameNotes: req.body.userHistory.gameNotes,
+      gameNotes: req.body.userHistory.gameNotes
   };
 
   const query = { where: { id: req.params.id} };
@@ -63,7 +54,7 @@ router.put("/updatenotes/:id", validateSession, function (req, res) {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-//Admin functioning
+
 router.delete("/delete/:id", validateSession, adminUser(), function (req, res) {
   const query = { where: { id: req.params.id, 
     owner: req.user.id.toString() 
