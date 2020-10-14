@@ -11,7 +11,7 @@ let sequelize = require("../db");
 router.post('/signup', (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
-        permission: req.body.user.permission,
+        permission: "basic",
         password: bcrypt.hashSync(req.body.user.password, 14),
     };
     
