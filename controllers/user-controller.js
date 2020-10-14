@@ -11,7 +11,7 @@ let sequelize = require("../db");
 router.post('/signup', (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
-        permission: req.body.user.permission,
+        permission: "basic",
         password: bcrypt.hashSync(req.body.user.password, 14),
     };
     
@@ -44,7 +44,8 @@ router.post('/login', (req, res) => {
                     res.status(200).json({
                         message: "COMMENCE TRIVIA!",
                         userName: userName,
-                        sessionToken: token
+                        sessionToken: token,
+                        permission: user.permission
                     })
                 } else {
                     res.status(502).json({error: err, message: "WOMP WOMP... TRY AGAIN."})
