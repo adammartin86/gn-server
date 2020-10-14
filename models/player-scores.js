@@ -1,6 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const PlayerScores = sequelize.define("playerScores", {
-      player1: {
+      owner: {
+          type: DataTypes.INTEGER,
+      },
+      
+        player1: {
         type: DataTypes.STRING,
         
       },

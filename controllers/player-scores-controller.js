@@ -10,6 +10,7 @@ let adminUser = require("../middleware/admin")
 //  http://localhost:3000/player-scores/startgame
 router.post("/startgame", validateSession, (req, res) => {
   const playerScores = {
+    owner: req.user.id,
     player1: req.body.playerScores.player1,
     player2: req.body.playerScores.player2,
     player3: req.body.playerScores.player3,

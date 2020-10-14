@@ -23,8 +23,10 @@ router.post("/post", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/get/:id", validateSession, (req, res) => {
-  let userid = req.user.id.toString();
+
+
+router.get("/get/mygames", validateSession, (req, res) => {
+  let userid = req.user.id;
   UserHistory.findAll({
     where: { owner: userid },
   })
