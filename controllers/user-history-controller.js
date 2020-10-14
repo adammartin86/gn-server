@@ -12,7 +12,6 @@ const adminUser = require("../middleware/admin");
 router.post("/post", validateSession, (req, res) => {
   const userHistory = {
     owner: req.user.id,
-    datePlayed: req.body.userHistory.datePlayed,
     triviaTopic: req.body.userHistory.triviaTopic,
     difficulty: req.body.userHistory.difficulty,
     winner: req.body.userHistory.winner,

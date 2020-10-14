@@ -44,7 +44,8 @@ router.post('/login', (req, res) => {
                     res.status(200).json({
                         message: "COMMENCE TRIVIA!",
                         userName: userName,
-                        sessionToken: token
+                        sessionToken: token,
+                        permission: user.permission
                     })
                 } else {
                     res.status(502).json({error: err, message: "WOMP WOMP... TRY AGAIN."})
