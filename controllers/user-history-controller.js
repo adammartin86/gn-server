@@ -12,7 +12,10 @@ const adminUser = require("../middleware/admin");
 router.post("/post", validateSession, (req, res) => {
   const userHistory = {
     owner: req.user.id,
+<<<<<<< HEAD
     datePlayed: req.body.userHistory.datePlayed,
+=======
+>>>>>>> 740277f6ebfb16554b4918bca9b401428075c6a5
     triviaTopic: req.body.userHistory.triviaTopic,
     difficulty: req.body.userHistory.difficulty,
     winner: req.body.userHistory.winner,
@@ -24,8 +27,14 @@ router.post("/post", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+<<<<<<< HEAD
 router.get("/get/:id", validateSession, (req, res) => {
   let userid = req.user.id.toString();
+=======
+
+router.get("/get/mygames", validateSession, (req, res) => {
+  let userid = req.user.id;
+>>>>>>> 740277f6ebfb16554b4918bca9b401428075c6a5
   UserHistory.findAll({
     where: { owner: userid },
   })
