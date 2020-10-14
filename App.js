@@ -17,7 +17,7 @@ app.use(express.json());
 //small comment
 app.use("/player-scores", playerScores);
 app.use('/user', user);
-app.use('/user-history', userHistory)
+app.use('/user-history', userHistory);
 
 app.listen(process.env.PORT, function () {
   console.log("App is listening on port 3000");

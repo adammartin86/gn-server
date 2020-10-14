@@ -4,10 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      datePlayed: {
-        type: DataTypes.STRING,
-        
-      },
+      
       triviaTopic: {
           type: DataTypes.STRING,
          
