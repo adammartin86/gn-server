@@ -21,7 +21,8 @@ router.post('/signup', (req, res) => {
         res.status(200).json({
             user: req.body.user.userName,
             message: 'USER SUCCESSFULLY INITIALIZED',
-            sessionToken: token
+            sessionToken: token,
+            permission: req.body.user.permission
         });
     })
     .catch(err => {
