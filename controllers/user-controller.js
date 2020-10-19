@@ -11,7 +11,7 @@ let sequelize = require("../db");
 router.post('/signup', (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
-        permission: req.body.user.permission,
+        permission: "basic",
         password: bcrypt.hashSync(req.body.user.password, 14),
     };
     
@@ -21,7 +21,8 @@ router.post('/signup', (req, res) => {
         res.status(200).json({
             user: req.body.user.userName,
             message: 'USER SUCCESSFULLY INITIALIZED',
-            sessionToken: token
+            sessionToken: token,
+            permission: req.body.user.permission
         });
     })
     .catch(err => {
@@ -44,7 +45,8 @@ router.post('/login', (req, res) => {
                     res.status(200).json({
                         message: "COMMENCE TRIVIA!",
                         userName: userName,
-                        sessionToken: token
+                        sessionToken: token,
+                        permission: user.permission
                     })
                 } else {
                     res.status(502).json({error: err, message: "WOMP WOMP... TRY AGAIN."})
@@ -75,7 +77,7 @@ router.get('/seeall', validateSession, adminUser(), (req, res) => {
 router.put('/edit/:id', validateSession, adminUser(), (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
-        password: bcrypt.hashSync(req.body.user.password, 14)
+        // password: bcrypt.hashSync(req.body.user.password, 14)
     };
 
     let query = {where: {id: req.params.id}};
