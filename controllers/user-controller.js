@@ -77,7 +77,7 @@ router.get('/seeall', validateSession, adminUser(), (req, res) => {
 router.put('/edit/:id', validateSession, adminUser(), (req, res) => {
     let userModel = {
         userName: req.body.user.userName,
-        
+        // password: bcrypt.hashSync(req.body.user.password, 14)
     };
 
     let query = {where: {id: req.params.id}};
