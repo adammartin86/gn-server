@@ -54,10 +54,25 @@ router.put("/updatenotes/:id", validateSession, function (req, res) {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+//admin update
+router.put("/update/:id", validateSession, adminUser(), function (req, res) {
+  const updateGame = {
+      winner: req.body.userHistory.winner,
+      gameNotes: req.body.userHistory.gameNotes
+  };
+
+  const query = { where: { id: req.params.id} };
+
+  UserHistory.update(updateGame, query)
+    .then((history) => res.status(200).json(history))
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 
 router.delete("/delete/:id", validateSession, adminUser(), function (req, res) {
-  const query = { where: { id: req.params.id, 
-    owner: req.user.id.toString() 
+  const query = { where: { id: req.params.id
+    // , 
+    // owner: req.user.id.toString() 
   } };
 
   UserHistory.destroy(query)
