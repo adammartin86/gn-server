@@ -20,5 +20,5 @@ app.use('/user', user);
 app.use('/user-history', userHistory);
 
 app.listen(process.env.PORT, function () {
-  console.log("App is listening on port 3000");
+  console.log(`Server is listening on port ${process.env.PORT}`);
 });
